@@ -10,14 +10,15 @@ import { useLogoutMutation } from 'redux/authApi';
 
 export const UserMenu = () => {
   const userName = useSelector(state => state.auth.user?.name);
-  const isLogedIn = useSelector(state => state.auth.isLogedIn);
+  const userEmail = useSelector(state => state.auth.user?.email);
+
   const dispatch = useDispatch();
   const [logout] = useLogoutMutation();
 
   return (
     <ProfileLabel>
-      <ProfileIcon>A</ProfileIcon>{' '}
-      {isLogedIn ? `Hello, ${userName}` : 'Need LogIn'}
+      <ProfileIcon>{userName.slice(0, 1).toUpperCase()}</ProfileIcon>{' '}
+      {userEmail}
       <LogoutBtn
         type="button"
         onClick={() => {

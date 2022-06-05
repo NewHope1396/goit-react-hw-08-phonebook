@@ -5,8 +5,11 @@ import {
   ListItem,
 } from 'components/AppBar/AppBar.styled';
 import { UserMenu } from 'components/UserMenu/UserMenu';
+import { useSelector } from 'react-redux';
 
 export const AppBar = () => {
+  const isLogedIn = useSelector(state => state.auth.isLogedIn);
+
   return (
     <Container>
       <NavList>
@@ -35,33 +38,36 @@ export const AppBar = () => {
           </CustomLink>
         </ListItem>
       </NavList>
-      <NavList>
-        <ListItem>
-          <CustomLink
-            to={'/register'}
-            style={({ isActive }) =>
-              isActive
-                ? { color: '#6994f1', textDecoration: 'underline' }
-                : undefined
-            }
-          >
-            Register
-          </CustomLink>
-        </ListItem>
-        <ListItem>
-          <CustomLink
-            to={'/login'}
-            style={({ isActive }) =>
-              isActive
-                ? { color: '#6994f1', textDecoration: 'underline' }
-                : undefined
-            }
-          >
-            LogIn
-          </CustomLink>
-        </ListItem>
-      </NavList>
-      <UserMenu></UserMenu>
+      {isLogedIn ? (
+        <UserMenu></UserMenu>
+      ) : (
+        <NavList>
+          <ListItem>
+            <CustomLink
+              to={'/register'}
+              style={({ isActive }) =>
+                isActive
+                  ? { color: '#6994f1', textDecoration: 'underline' }
+                  : undefined
+              }
+            >
+              Register
+            </CustomLink>
+          </ListItem>
+          <ListItem>
+            <CustomLink
+              to={'/login'}
+              style={({ isActive }) =>
+                isActive
+                  ? { color: '#6994f1', textDecoration: 'underline' }
+                  : undefined
+              }
+            >
+              LogIn
+            </CustomLink>
+          </ListItem>
+        </NavList>
+      )}
     </Container>
   );
 };

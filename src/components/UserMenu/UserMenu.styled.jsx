@@ -5,6 +5,7 @@ export const ProfileLabel = styled.p`
   font-weight: 700;
   display: flex;
   align-items: center;
+  margin: 0;
 `;
 
 export const ProfileIcon = styled.span`

@@ -4,7 +4,9 @@ import { useGetContactsQuery } from 'redux/contactsSlice';
 import PropTypes from 'prop-types';
 
 export const ContactList = ({ filter }) => {
-  const { data, isLoading } = useGetContactsQuery();
+  const { data, isLoading } = useGetContactsQuery(null, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const normalizedFilter = filter.toLowerCase();
   const filteredContacts = data?.filter(contact =>

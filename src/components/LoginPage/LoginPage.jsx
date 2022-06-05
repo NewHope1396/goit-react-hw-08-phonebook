@@ -19,9 +19,15 @@ export const LoginPage = () => {
 
   const onSubmit = (values, actions) => {
     login(values)
-      .then(res => dispatch(setUser(res.data)))
+      .then(res => {
+        if (res.data) {
+          dispatch(setUser(res.data));
+          actions.resetForm();
+        } else {
+          alert('Wrong password or email');
+        }
+      })
       .catch(err => console.log(err));
-    actions.resetForm();
   };
 
   return (
