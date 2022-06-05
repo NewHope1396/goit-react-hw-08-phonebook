@@ -26,6 +26,10 @@ const authSlice = createSlice({
       state.isLogedIn = false;
       state.user = null;
     },
+    refreshUser(state, action) {
+      state.user = action.payload;
+      state.isLogedIn = true;
+    },
   },
 });
 
@@ -34,4 +38,4 @@ export const persistedAuthReducer = persistReducer(
   authSlice.reducer
 );
 
-export const { setUser, resetUser } = authSlice.actions;
+export const { setUser, resetUser, refreshUser } = authSlice.actions;

@@ -1,6 +1,6 @@
 import { Container } from './App.styled';
 import { AppBar } from 'components/AppBar/AppBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { ContactsSection } from 'components/ContactsSection/ContactsSection';
@@ -10,16 +10,22 @@ import { LoginPage } from 'components/LoginPage/LoginPage';
 import { PrivateRout } from 'components/PrivateRout/PrivateRout';
 import { PublicRout } from 'components/PublicRout/PublicRout';
 import { useRefreshUserQuery } from 'redux/authApi';
-import { setUser } from 'redux/authSlice';
+import { refreshUser } from 'redux/authSlice';
 
 export const App = () => {
   const [filter, setFilter] = useState('');
   const dispatch = useDispatch();
   const { isLogedIn, token } = useSelector(state => state.auth);
-  const { data } = useRefreshUserQuery();
-  token && !isLogedIn && dispatch(setUser({ ...data, token }));
-
-  return (
+  const mustBeSkiped = token === null || isLogedIn;
+  const { data, isFetching } = useRefreshUserQuery(null, {
+    skip: mustBeSkiped,
+  });
+  useEffect(() => {
+    data && dispatch(refreshUser(data));
+  }, [data, dispatch]);
+  return isFetching ? (
+    <h1> Loading...</h1>
+  ) : (
     <Container>
       <AppBar></AppBar>
       <h1>Phonebook</h1>
