@@ -25,18 +25,20 @@ export const AppBar = () => {
             Home
           </CustomLink>
         </ListItem>
-        <ListItem>
-          <CustomLink
-            to={'/contacts'}
-            style={({ isActive }) =>
-              isActive
-                ? { color: '#6994f1', textDecoration: 'underline' }
-                : undefined
-            }
-          >
-            Contacts
-          </CustomLink>
-        </ListItem>
+        {isLogedIn && (
+          <ListItem>
+            <CustomLink
+              to={'/contacts'}
+              style={({ isActive }) =>
+                isActive
+                  ? { color: '#6994f1', textDecoration: 'underline' }
+                  : undefined
+              }
+            >
+              Contacts
+            </CustomLink>
+          </ListItem>
+        )}
       </NavList>
       {isLogedIn ? (
         <UserMenu></UserMenu>
