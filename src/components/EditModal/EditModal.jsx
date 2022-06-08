@@ -13,7 +13,7 @@ import {
 import { nanoid } from 'nanoid';
 import { useEffect } from 'react';
 
-export const EditModal = ({ setIsModalShow, isModalShow, contact }) => {
+export const EditModal = ({ setIsEditModalShow, isEditModalShow, contact }) => {
   const nameInputId = nanoid();
   const numberInputId = nanoid();
 
@@ -45,32 +45,32 @@ export const EditModal = ({ setIsModalShow, isModalShow, contact }) => {
       return;
     }
 
-    setIsModalShow(false);
+    setIsEditModalShow(false);
   };
 
   useEffect(() => {
     const handleKeyDown = e => {
       if (e.code === 'Escape') {
-        setIsModalShow(false);
+        setIsEditModalShow(false);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
 
-    isSuccess && setIsModalShow(false);
+    isSuccess && setIsEditModalShow(false);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [setIsModalShow, isSuccess]);
+  }, [setIsEditModalShow, isSuccess]);
 
   return (
-    isModalShow && (
+    isEditModalShow && (
       <Overlay onClick={handleBackdropCklick}>
         <Formik
           initialValues={{
-            name: `${contact.name}`,
-            number: `${contact.number}`,
+            name: isLoading ? '' : contact.name,
+            number: isLoading ? '' : contact.number,
           }}
           onSubmit={onFormSubmit}
         >

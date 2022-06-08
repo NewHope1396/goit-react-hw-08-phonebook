@@ -1,38 +1,50 @@
-import { Button, Item } from './ContactListItem.styled';
+import {
+  ListItemBtn,
+  Item,
+  DeleteImg,
+  EditImg,
+  BtnsContainer,
+} from './ContactListItem.styled';
 import PropTypes from 'prop-types';
-import { useDeleteContactMutation } from 'redux/contactsSlice';
 import { EditModal } from 'components/EditModal/EditModal';
 import { useState } from 'react';
+import { DeleteModal } from 'components/DeleteModal/DeleteModal';
 
 export const ContactListItem = ({ contact }) => {
-  const [deleteContact, result] = useDeleteContactMutation();
-
-  const [isModalShow, setIsModalShow] = useState(false);
+  const [isEditModalShow, setIsEditModalShow] = useState(false);
+  const [isDeleteModalShow, setIsDeleteModalShow] = useState(false);
 
   return (
     <Item>
       <p>
         {contact.name}: {contact.number}
       </p>
-      <Button
-        onClick={() => {
-          setIsModalShow(true);
-        }}
-      >
-        Edit
-      </Button>
-      <Button
-        type="button"
-        onClick={() => deleteContact(contact.id)}
-        disabled={result.isLoading}
-      >
-        {result.isLoading ? 'Wait...' : 'Delete'}
-      </Button>
+      <BtnsContainer>
+        <ListItemBtn
+          onClick={() => {
+            setIsEditModalShow(true);
+          }}
+        >
+          <EditImg></EditImg>
+        </ListItemBtn>
+        <ListItemBtn
+          onClick={() => {
+            setIsDeleteModalShow(true);
+          }}
+        >
+          <DeleteImg></DeleteImg>
+        </ListItemBtn>
+      </BtnsContainer>
       <EditModal
-        setIsModalShow={setIsModalShow}
-        isModalShow={isModalShow}
+        setIsEditModalShow={setIsEditModalShow}
+        isEditModalShow={isEditModalShow}
         contact={contact}
       ></EditModal>
+      <DeleteModal
+        setIsDeleteModalShow={setIsDeleteModalShow}
+        isDeleteModalShow={isDeleteModalShow}
+        contact={contact}
+      ></DeleteModal>
     </Item>
   );
 };
